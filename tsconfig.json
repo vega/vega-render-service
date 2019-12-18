@@ -5,7 +5,8 @@
     "lib": ["es6"],
     "sourceMap": true,
     "esModuleInterop": true,
-    "outDir": "build"
+    "outDir": "build",
+    "skipLibCheck": true
   },
   "include": [
     "src/*.ts",
