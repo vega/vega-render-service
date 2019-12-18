@@ -2,3 +2,9 @@ node_modules/*
 build/*
 dist/*
 .idea/
+*.png
+*.pdf
+*.svg
+plot.png
+plot.pdf
+plot.svg

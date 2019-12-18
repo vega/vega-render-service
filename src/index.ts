@@ -15,7 +15,7 @@ app.get( "/", ( req: Request, res: Response ) => {
     res.send("Vega pdf service");
 } );
 
-app.post("/handle", (req: Request, res: Response) => {
+app.post("/", (req: Request, res: Response) => {
     console.log("Request received");
     let contentType: string = req.header("Accept") ?  req.header("Accept") : "pdf";
     if (contentType === "application/pdf") {
