@@ -1,0 +1,8 @@
+{
+  "version": 2,
+  "name": "vega-editor-pdf-service",
+  "env": {
+  },
+  "builds": [{ "src": "src/*.ts", "use": "@now/node" }],
+  "routes": [{ "src": "/(.*)", "dest": "/src/index.ts"}]
+}
