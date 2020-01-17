@@ -1,1 +1,1 @@
-# editor-pdf-service
+# vega-render-service
