@@ -12,11 +12,10 @@ const port: number = 8080; // default port to listen
 
 // define a route handler for the default home page
 app.get( "/", ( req: Request, res: Response ) => {
-    res.send("Vega pdf service");
+    res.status(200).send("Vega pdf service");
 } );
 
 app.post("/", (req: Request, res: Response) => {
-    console.log("Request received");
     let contentType: string = req.header("Accept") ?  req.header("Accept") : "pdf";
     if (contentType === "application/pdf") {
         contentType = "pdf";
@@ -25,10 +24,10 @@ app.post("/", (req: Request, res: Response) => {
     } else if (contentType === "image/svg") {
         contentType = "svg";
     } else {
-        contentType = "pdf";
-    } // otherwise, default to pdf
+        contentType = "svg";
+    } // otherwise, default to svg
 
-    const specs = req.body.specs;
+    const specs = req.body;
 
     new vega.View(vega.parse(specs), {renderer: "none"}).runAsync().then((view) => {
         switch (contentType) {
@@ -60,3 +59,5 @@ app.post("/", (req: Request, res: Response) => {
 app.listen( port, () => {
     console.log( `server started at http://localhost:${ port }` );
 } );
+
+export default app;
