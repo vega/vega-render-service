@@ -23,7 +23,7 @@ Install dependencies with `yarn`.
     
 4. Run sample test command
     ``` 
-    $ sh savePdf.sh
+    $ ./savePdf.sh
     ```
 
 6.  Go to the home route (which usually is `http://localhost:8080/`). Otherwise
