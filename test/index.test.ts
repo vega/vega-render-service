@@ -1,24 +1,23 @@
-import * as chai from 'chai';
+import request from 'supertest';
 import app from '../src/app';
 import { spec, svg } from './constants';
-import 'mocha';
-import chaiHttp from 'chai-http';
-
-chai.use(chaiHttp);
-const { expect } = chai;
-
 
 describe('API Request', () => {
-  it('should GET /', async () => {
-    const res = await chai.request(app).get('/');
-    chai.expect(res.status).to.equal(200);
-    chai.expect(res).not.to.be.empty;
-    expect(res.status).to.equal(200);
+  test('It should response the GET method', () => {
+    return request(app)
+        .get("/")
+        .then(response => {
+          expect(response.statusCode).toBe(200);
+        });
   });
 
-  it('should POST /', async () => {
-    const res = await chai.request(app).post('/').send(spec);
-    chai.expect(res.text).not.to.be.empty;
-    chai.expect(res.text).to.equal(svg);
+  test('should POST /', () => {
+      return request(app)
+          .post('/')
+          .send(spec)
+          .then(response => {
+              expect(response.statusCode).toBe(200);
+              expect(response.text).toBe(svg);
+          });
   });
 });

@@ -8,7 +8,6 @@ import * as vega from 'vega';
 const app: Express = express();
 app.use(bodyparser.urlencoded({ extended: false }));
 app.use(bodyparser.json());
-const port = 8080; // default port to listen
 
 // define a route handler for the default home page
 app.get('/', (req: Request, res: Response) => {
@@ -45,9 +44,5 @@ app.post('/', async (req: Request, res: Response) => {
   }
 });
 
-// start the Express server
-app.listen(port, () => {
-  console.log(`server started at http://localhost:${port}`);
-});
 
 export default app;
