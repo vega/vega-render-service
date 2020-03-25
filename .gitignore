@@ -4,4 +4,4 @@ dist/*
 .idea/*
 *.png
 *.pdf
-*.svg
+plot.svg
