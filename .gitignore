@@ -1,7 +1,7 @@
-node_modules/*
+.now
+*.pdf
+*.png
 build/*
 dist/*
-.idea/*
-*.png
-*.pdf
+node_modules/*
 plot.svg
