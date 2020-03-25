@@ -5,7 +5,7 @@
 
 Install dependencies with `yarn`.
 
-## Setup Instructions
+## Development Instructions
 
 1. Clone the repository.
     ```

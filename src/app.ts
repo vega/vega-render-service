@@ -36,7 +36,7 @@ app.post('/', async (req: Request, res: Response) => {
       res.send(svg);
       break;
     case 'pdf':
-      let pdf = await (view as any).toCanvas(undefined, { type: 'pdf', context: { textDrawingMode: 'glyph' } })
+      let pdf = await view.toCanvas(undefined, { type: 'pdf', context: { textDrawingMode: 'glyph' } })
       pdf.createPDFStream().pipe(res);
       break;
     case 'png':
