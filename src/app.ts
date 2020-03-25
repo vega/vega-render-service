@@ -1,10 +1,8 @@
-// @ts-ignore
 import bodyparser from 'body-parser';
 import express, { Request, Response } from 'express';
 import { Express } from 'express-serve-static-core';
 import * as vega from 'vega';
 
-// @ts-ignore
 const app: Express = express();
 app.use(bodyparser.urlencoded({ extended: false }));
 app.use(bodyparser.json());
