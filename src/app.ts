@@ -27,22 +27,26 @@ app.post('/', async (req: Request, res: Response) => {
   } // otherwise, default to svg
 
   const specs = req.body;
-  let view = await new vega.View(vega.parse(specs), { renderer: 'none' }).runAsync();
+  const view = await new vega.View(vega.parse(specs), {
+    renderer: 'none',
+  }).runAsync();
 
   switch (contentType) {
     case 'svg':
-      let svg = await view.toSVG();
+      const svg = await view.toSVG();
       res.send(svg);
       break;
     case 'pdf':
-      let pdf = await view.toCanvas(undefined, { type: 'pdf', context: { textDrawingMode: 'glyph' } })
+      const pdf = await view.toCanvas(undefined, {
+        type: 'pdf',
+        context: { textDrawingMode: 'glyph' },
+      });
       pdf.createPDFStream().pipe(res);
       break;
     case 'png':
-      let png = await view.toCanvas();
+      const png = await view.toCanvas();
       png.createPNGStream().pipe(res);
   }
 });
-
 
 export default app;
