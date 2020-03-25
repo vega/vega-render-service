@@ -15,37 +15,30 @@ app.get('/', (req: Request, res: Response) => {
 });
 
 app.post('/', async (req: Request, res: Response) => {
-  let contentType: string = req.header('Accept') ? req.header('Accept') : 'pdf';
-  if (contentType === 'application/pdf') {
-    contentType = 'pdf';
-  } else if (contentType === 'image/png') {
-    contentType = 'png';
-  } else if (contentType === 'image/svg') {
-    contentType = 'svg';
-  } else {
-    contentType = 'svg';
-  } // otherwise, default to svg
+  const contentType = req.header('Accept') ?? 'pdf';
 
   const specs = req.body;
-  const view = await new vega.View(vega.parse(specs), {
+  const view = new vega.View(vega.parse(specs), {
     renderer: 'none',
-  }).runAsync();
+  });
+  view.finalize();
 
   switch (contentType) {
-    case 'svg':
-      const svg = await view.toSVG();
-      res.send(svg);
-      break;
-    case 'pdf':
+    case 'application/pdf':
       const pdf = await view.toCanvas(undefined, {
         type: 'pdf',
         context: { textDrawingMode: 'glyph' },
       });
       pdf.createPDFStream().pipe(res);
       break;
-    case 'png':
+    case 'mage/png':
       const png = await view.toCanvas();
       png.createPNGStream().pipe(res);
+    case 'image/svg':
+    default:
+      const svg = await view.toSVG();
+      res.send(svg);
+      break;
   }
 });
 
