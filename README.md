@@ -9,13 +9,14 @@ Install dependencies with `yarn`.
 
 1. Clone the repository.
     ```
-    $ git clone git@github.com:vega/editor-pdf-service.git
+    $ git clone git@github.com:vega/vega-render-service.git
     ```
 
 2. Install all dependencies.
     ```
     $ yarn install
     ```
+
 3.  Run the back-end server.
     ```
     $ yarn start
@@ -23,7 +24,7 @@ Install dependencies with `yarn`.
     
 4. Run sample test command
     ``` 
-    $ ./savePdf.sh
+    $ scripts/savePdf.sh
     ```
 
 6.  Go to the home route (which usually is `http://localhost:8080/`). Otherwise

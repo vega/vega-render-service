@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "name": "vega-editor-pdf-service",
+  "name": "vega-render-service",
   "env": {
   },
   "builds": [{ "src": "src/*.ts", "use": "@now/node" }],

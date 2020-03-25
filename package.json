@@ -1,6 +1,6 @@
 {
-  "name": "editor-pdf-service",
-  "version": "1.0.0",
+  "name": "vega-render-service",
+  "version": "0.1.0",
   "description": "",
   "main": "dist/index.js",
   "scripts": {
