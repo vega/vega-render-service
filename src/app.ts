@@ -31,7 +31,7 @@ app.post('/', async (req: Request, res: Response) => {
       });
       pdf.createPDFStream().pipe(res);
       break;
-    case 'mage/png':
+    case 'image/png':
       const png = await view.toCanvas();
       png.createPNGStream().pipe(res);
     case 'image/svg':
