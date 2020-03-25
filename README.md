@@ -50,15 +50,3 @@ Install dependencies with `yarn`.
             Accept: image/png OR application/pdf or image/svg
            
 ```
-
-## Code formatting
-
-- Install [ESLint
-  plugin](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint)
-  for automatically handling formatting of TypeScript files.
-- Install [Rewrap
-  plugin](https://marketplace.visualstudio.com/items?itemName=stkb.rewrap) to
-  assist formatting of markdown files. Press <kbd>Alt</kbd> + <kbd>Q</kbd> to
-  limit lines at 80 characters. 
-- The project uses ESLint to format the code. Run `yarn format` to fix
-  formatting where it's possible to do so automatically.
