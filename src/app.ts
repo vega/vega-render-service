@@ -15,7 +15,7 @@ app.get('/', (req: Request, res: Response) => {
 app.post('/', async (req: Request, res: Response) => {
   const contentType = req.header('Accept') ?? 'pdf';
 
-  const specs = req.body;
+  const specs: vega.Spec = req.body;
   const view = new vega.View(vega.parse(specs), {
     renderer: 'none',
   });
