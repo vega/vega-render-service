@@ -11,7 +11,7 @@ app.use(bodyparser.json());
 
 // define a route handler for the default home page
 app.get('/', (req: Request, res: Response) => {
-  res.status(200).send('Vega pdf service');
+  res.status(200).send('Vega render service. Learn more at https://github.com/vega/vega-render-service.');
 });
 
 app.post('/', async (req: Request, res: Response) => {
