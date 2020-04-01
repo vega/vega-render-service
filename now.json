@@ -1,6 +1,7 @@
 {
   "version": 2,
   "name": "vega-render-service",
+  "alias": "vega-render",
   "env": {
   },
   "builds": [{ "src": "src/*.ts", "use": "@now/node" }],
