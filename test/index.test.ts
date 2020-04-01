@@ -1,6 +1,6 @@
 import request from 'supertest';
 import app from '../src/app';
-import { spec, svg } from './constants';
+import { vegaliteSpec, vegaSpec, vegaSvg, vegaliteSvg } from './constants';
 
 describe('API Request', () => {
   test('It should response the GET method', () => {
@@ -11,13 +11,23 @@ describe('API Request', () => {
         });
   });
 
-  test('should POST /', () => {
+  test('should POST SVG for Vega Specs', () => {
       return request(app)
           .post('/')
-          .send(spec)
+          .send(vegaSpec)
           .then(response => {
               expect(response.statusCode).toBe(200);
-              expect(response.text).toBe(svg);
+              expect(response.text).toBe(vegaSvg);
           });
   });
+
+    test('should POST SVG for VegaLite Specs', () => {
+        return request(app)
+            .post('/')
+            .send(vegaliteSpec)
+            .then(response => {
+                expect(response.statusCode).toBe(200);
+                expect(response.text).toBe(vegaliteSvg);
+            });
+    });
 });
