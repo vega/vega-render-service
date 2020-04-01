@@ -11,7 +11,7 @@ Install dependencies with `yarn`.
 
 1. Clone the repository.
     ```
-    $ git clone git@github.com:vega/vega-render-service.git
+    $ git clone git@github.com:vega/vega-render.git
     ```
 
 2. Install all dependencies.
