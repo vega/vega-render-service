@@ -1,7 +1,7 @@
 [![Build Status](https://travis-ci.com/vega/vega-render-service.svg?branch=master)](https://travis-ci.com/vega/vega-render-service)
 # Vega Service to Generate Images
 
-Deployed at https://vega-render-service.now.sh/.
+Deployed at https://vega-render.now.sh/.
 
 ## Dev Setup
 
@@ -11,7 +11,7 @@ Install dependencies with `yarn`.
 
 1. Clone the repository.
     ```
-    $ git clone git@github.com:vega/vega-render.git
+    $ git clone git@github.com:vega/vega-render-service.git
     ```
 
 2. Install all dependencies.
