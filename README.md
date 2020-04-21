@@ -29,7 +29,7 @@ Install dependencies with `yarn`.
     $ scripts/savePdf.sh
     ```
 
-6.  Go to the home route (which usually is `http://localhost:8080/`). Otherwise
+6.  Go to the home route (which usually is `http://localhost:8090/`). Otherwise
     it will be mentioned in the console where the above command is run.
     
 ## Documentation
