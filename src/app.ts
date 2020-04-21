@@ -4,10 +4,12 @@ import { Express } from 'express-serve-static-core';
 import * as vega from 'vega';
 import vegaUrlParser from 'vega-schema-url-parser';
 import { compile, TopLevelSpec } from 'vega-lite';
+import cors from 'cors';
 
 const app: Express = express();
 app.use(bodyparser.urlencoded({ extended: true }));
 app.use(bodyparser.json());
+app.use(cors());
 
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
