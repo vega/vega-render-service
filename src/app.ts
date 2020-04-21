@@ -6,8 +6,21 @@ import vegaUrlParser from 'vega-schema-url-parser';
 import { compile, TopLevelSpec } from 'vega-lite';
 
 const app: Express = express();
-app.use(bodyparser.urlencoded({ extended: false }));
+app.use(bodyparser.urlencoded({ extended: true }));
 app.use(bodyparser.json());
+
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header(
+      'Access-Control-Allow-Headers',
+      'Origin, X-Requested-With, Content-Type, Accept, Authorization'
+  );
+  if (req.method === 'OPTIONS') {
+    res.header('Access-Control-Allow-Methods', 'PUT, POST, GET');
+    return res.status(200).json({});
+  }
+  next();
+});
 
 // define a route handler for the default home page
 app.get('/', (req: Request, res: Response) => {
