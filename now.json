@@ -5,5 +5,14 @@
   "env": {
   },
   "builds": [{ "src": "src/*.ts", "use": "@now/node" }],
-  "routes": [{ "src": "/(.*)", "dest": "/src/server.ts"}]
+  "routes": [{
+    "src": "/(.*)", "dest": "/src/server.ts",
+    "methods": ["GET", "POST", "OPTIONS"],
+    "headers": {
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept",
+      "Access-Control-Allow-Credentials": "true"
+    },
+    "continue": true
+  }]
 }
