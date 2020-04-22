@@ -12,15 +12,15 @@ app.use(bodyparser.json());
 app.use(cors());
 
 app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', 'http://localhost:8080');
-  // res.header(
-  //     'Access-Control-Allow-Headers',
-  //     'Origin, X-Requested-With, Content-Type, Accept, Authorization'
-  // );
-  // if (req.method === 'OPTIONS') {
-  //   res.header('Access-Control-Allow-Methods', 'PUT, POST, GET');
-  //   // return res.status(200).json({});
-  // }
+  res.header('Access-Control-Allow-Origin', 'http://0.0.0.0:8080');
+  res.header(
+      'Access-Control-Allow-Headers',
+      'Origin, X-Requested-With, Content-Type, Accept, Authorization'
+  );
+  if (req.method === 'OPTIONS') {
+    res.header('Access-Control-Allow-Methods', 'PUT, POST, GET');
+    return res.status(200).json({});
+  }
   next();
 });
 
@@ -48,22 +48,24 @@ app.post('/', async (req: Request, res: Response) => {
     renderer: 'none',
   });
   view.finalize();
-
   switch (contentType) {
     case 'application/pdf':
       const pdf = await view.toCanvas(undefined, {
         type: 'pdf',
         context: { textDrawingMode: 'glyph' },
       });
-      pdf.createPDFStream().pipe(res);
+
+      const encodedPdf = pdf.toBuffer();
+      res.status(200).send(encodedPdf);
       break;
     case 'image/png':
       const png = await view.toCanvas();
-      png.createPNGStream().pipe(res);
+      const encodedPng = png.toBuffer();
+      res.status(200).send(encodedPng);
     case 'image/vegaSvg':
     default:
       const svg = await view.toSVG();
-      res.send(svg);
+      res.status(200).send(svg);
       break;
   }
 });

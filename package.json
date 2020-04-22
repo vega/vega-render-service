@@ -6,6 +6,7 @@
   "scripts": {
     "build": "tsc",
     "prestart": "npm run build",
+    "now-build": "yum install gcc-c++ cairo-devel pango-devel libjpeg-turbo-devel giflib-devel libuuid-devel libmount-devel && cp /lib64/{libuuid,libmount,libblkid}.so.1 node_modules/canvas/build/Release/ && npm run build",
     "start": "node build/server.js",
     "test": "jest test/",
     "deploy": "now"
