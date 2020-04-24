@@ -5,11 +5,14 @@ import * as vega from 'vega';
 import vegaUrlParser from 'vega-schema-url-parser';
 import { compile, TopLevelSpec } from 'vega-lite';
 import cors from 'cors';
+import { registerFont } from 'canvas';
 
+registerFont(__dirname + '/public/fonts/Roboto/Roboto.ttf', { family: 'Roboto' })
 const app: Express = express();
 app.use(bodyparser.urlencoded({ extended: true }));
 app.use(bodyparser.json());
 app.use(cors());
+app.use(express.static(__dirname + '/public'));
 
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', 'http://0.0.0.0:8080');
@@ -50,17 +53,16 @@ app.post('/', async (req: Request, res: Response) => {
   view.finalize();
   switch (contentType) {
     case 'application/pdf':
-      const pdf = await view.toCanvas(undefined, {
+      const pdf: HTMLCanvasElement = await view.toCanvas(undefined, {
         type: 'pdf',
         context: { textDrawingMode: 'glyph' },
       });
-
-      const encodedPdf = pdf.toBuffer();
+      const encodedPdf = (pdf as any).toBuffer();
       res.status(200).send(encodedPdf);
       break;
     case 'image/png':
-      const png = await view.toCanvas();
-      const encodedPng = png.toBuffer();
+      const png: HTMLCanvasElement = await view.toCanvas();
+      const encodedPng = (png as any).toBuffer();
       res.status(200).send(encodedPng);
     case 'image/vegaSvg':
     default:
