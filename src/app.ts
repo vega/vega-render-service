@@ -15,7 +15,7 @@ app.use(cors());
 app.use(express.static(__dirname + '/public'));
 
 app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', 'http://0.0.0.0:8080');
+  res.header('Access-Control-Allow-Origin', '*');
   res.header(
       'Access-Control-Allow-Headers',
       'Origin, X-Requested-With, Content-Type, Accept, Authorization'
