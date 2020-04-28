@@ -1,7 +1,7 @@
 [![Build Status](https://travis-ci.com/vega/vega-render-service.svg?branch=master)](https://travis-ci.com/vega/vega-render-service)
 # Vega Service to Generate Images
 
-Deployed at https://vega-render.now.sh/.
+Deployed at https://vega-render.now.sh/. The service is still in development and some things may change. 
 
 ## Dev Setup
 
