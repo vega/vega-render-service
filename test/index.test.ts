@@ -1,33 +1,27 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
+
 import request from 'supertest';
 import app from '../src/app';
-import { vegaliteSpec, vegaSpec, vegaSvg, vegaliteSvg } from './constants';
+export const vegaSpec = require('../vegaSpecs/bar.vg.json');
+export const vegaliteSpec = require('../vegaSpecs/bar.vl.json');
 
 describe('API Request', () => {
-  test('It should response the GET method', () => {
-    return request(app)
-        .get("/")
-        .then(response => {
-          expect(response.statusCode).toBe(200);
-        });
+  test('It should response the GET method', async () => {
+    const response = await request(app).get('/');
+    expect(response.statusCode).toBe(200);
   });
 
-  test('should POST SVG for Vega Specs', () => {
-      return request(app)
-          .post('/')
-          .send(vegaSpec)
-          .then(response => {
-              expect(response.statusCode).toBe(200);
-              expect(response.text).toBe(vegaSvg);
-          });
+  test('should POST SVG for Vega Specs', async () => {
+    const response = await request(app).post('/').send(vegaSpec);
+
+    expect(response.statusCode).toBe(200);
+    expect(response.text).toMatchSnapshot();
   });
 
-    test('should POST SVG for VegaLite Specs', () => {
-        return request(app)
-            .post('/')
-            .send(vegaliteSpec)
-            .then(response => {
-                expect(response.statusCode).toBe(200);
-                expect(response.text).toBe(vegaliteSvg);
-            });
-    });
+  test('should POST SVG for VegaLite Specs', async () => {
+    const response = await request(app).post('/').send(vegaliteSpec);
+
+    expect(response.statusCode).toBe(200);
+    expect(response.text).toMatchSnapshot();
+  });
 });
