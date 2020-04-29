@@ -11,6 +11,7 @@
     "test": "jest test/",
     "deploy": "now"
   },
+  "private": true,
   "author": "",
   "license": "ISC",
   "dependencies": {

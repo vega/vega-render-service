@@ -7,7 +7,9 @@ import { compile, TopLevelSpec } from 'vega-lite';
 import cors from 'cors';
 import { registerFont } from 'canvas';
 
-registerFont(__dirname + '/public/fonts/Roboto/Roboto.ttf', { family: 'Roboto' })
+registerFont(__dirname + '/public/fonts/Roboto/Roboto.ttf', {
+  family: 'Roboto',
+});
 const app: Express = express();
 app.use(bodyparser.urlencoded({ extended: true }));
 app.use(bodyparser.json());
@@ -17,8 +19,8 @@ app.use(express.static(__dirname + '/public'));
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
   res.header(
-      'Access-Control-Allow-Headers',
-      'Origin, X-Requested-With, Content-Type, Accept, Authorization'
+    'Access-Control-Allow-Headers',
+    'Origin, X-Requested-With, Content-Type, Accept, Authorization',
   );
   if (req.method === 'OPTIONS') {
     res.header('Access-Control-Allow-Methods', 'PUT, POST, GET');
@@ -29,7 +31,11 @@ app.use((req, res, next) => {
 
 // define a route handler for the default home page
 app.get('/', (req: Request, res: Response) => {
-  res.status(200).send('Vega render service. Learn more at https://github.com/vega/vega-render-service.');
+  res
+    .status(200)
+    .send(
+      'Vega render service. Learn more at <a href="github.com/vega/vega-render-service">https://github.com/vega/vega-render-service/</a>.',
+    );
 });
 
 app.post('/', async (req: Request, res: Response) => {
@@ -38,13 +44,15 @@ app.post('/', async (req: Request, res: Response) => {
   const { library } = vegaUrlParser(specs.$schema);
 
   switch (library) {
-    case "vega":
+    case 'vega':
       break;
-    case "vega-lite":
+    case 'vega-lite':
       specs = compile(specs as TopLevelSpec, {}).spec;
       break;
     default:
-      return res.status(404).end("Invalid Schema, should be Vega or Vega-lite");
+      return res
+        .status(404)
+        .end('Invalid Schema, should be Vega or Vega-Lite.');
   }
 
   const view = new vega.View(vega.parse(specs), {
