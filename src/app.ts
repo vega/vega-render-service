@@ -34,7 +34,7 @@ app.get('/', (req: Request, res: Response) => {
   res
     .status(200)
     .send(
-      '<html><body>Vega render service. Learn more at <a href="github.com/vega/vega-render-service">https://github.com/vega/vega-render-service/</a>.</body></html>',
+      '<html><body><p>Vega render service. Learn more at <a href="https://github.com/vega/vega-render-service">github.com/vega/vega-render-service</a>.</p></body></html>',
     );
 });
 
