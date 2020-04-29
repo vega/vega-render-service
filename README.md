@@ -34,6 +34,8 @@ Install dependencies with `yarn`.
     
 ## Documentation
 
+You can find examples at in [`scripts`](https://github.com/vega/vega-render-service/tree/master/scripts).
+
 ```
     /handle : to return a pdf/png/svg file
     Params:
