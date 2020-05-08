@@ -1,1 +1,1 @@
-export const ALLOWED_URLS: string[] = ['www.vega.github.io'];
+export const ALLOWED_URLS: string[] = ['vega.github.io'];

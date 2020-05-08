@@ -1,5 +1,5 @@
 import bodyparser from 'body-parser';
-import express, {Request, response, Response} from 'express';
+import express, {Request, Response} from 'express';
 import { Express } from 'express-serve-static-core';
 import * as vega from 'vega';
 import vegaUrlParser from 'vega-schema-url-parser';
@@ -69,7 +69,7 @@ app.post('/', async (req: Request, res: Response) => {
       throw new Error('External data url not allowed');
     }
     return fetch(uri, {}).then((response) => {
-      if (!response.ok) throw new Error(response.status + '' + response.statusText);
+      if (!response.ok) throw new Error(response.status + response.statusText);
       return response.text();
     })
   };
