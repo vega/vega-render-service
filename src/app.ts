@@ -1,15 +1,20 @@
 import bodyparser from 'body-parser';
-import express, { Request, Response } from 'express';
+import express, {Request, response, Response} from 'express';
 import { Express } from 'express-serve-static-core';
 import * as vega from 'vega';
 import vegaUrlParser from 'vega-schema-url-parser';
 import { compile, TopLevelSpec } from 'vega-lite';
 import cors from 'cors';
 import { registerFont } from 'canvas';
+import { ALLOWED_URLS } from './constants';
+import fs from 'fs';
 
-registerFont(__dirname + '/public/fonts/Roboto/Roboto.ttf', {
-  family: 'Roboto',
-});
+if (fs.existsSync(__dirname + '/public/fonts/Roboto/Roboto.ttf')) {
+  registerFont(__dirname + '/public/fonts/Roboto/Roboto.ttf', {
+    family: 'Roboto',
+  });
+}
+
 const app: Express = express();
 app.use(bodyparser.urlencoded({ extended: true }));
 app.use(bodyparser.json());
@@ -55,8 +60,21 @@ app.post('/', async (req: Request, res: Response) => {
         .end('Invalid Schema, should be Vega or Vega-Lite.');
   }
 
-  const view = new vega.View(vega.parse(specs), {
+  let loader = vega.loader({ mode: 'http'});
+  loader.http = (uri:string, options:any): Promise<string> => {
+    if (ALLOWED_URLS.every((allowedUrl) => !uri.includes(allowedUrl))) {
+      res.status(404).send("External URI not allowed on this API");
+      throw 'External data url not allowed';
+    }
+    return fetch(uri, {}).then((response) => {
+      if (!response.ok) throw response.status + '' + response.statusText;
+      return response.text();
+    })
+  };
+
+  let view = new vega.View(vega.parse(specs), {
     renderer: 'none',
+    loader: loader
   });
   view.finalize();
   switch (contentType) {
@@ -66,15 +84,24 @@ app.post('/', async (req: Request, res: Response) => {
         context: { textDrawingMode: 'glyph' },
       });
       const encodedPdf = (pdf as any).toBuffer();
+      if (res.headersSent) {
+        return;
+      }
       res.status(200).send(encodedPdf);
       break;
     case 'image/png':
       const png: HTMLCanvasElement = await view.toCanvas();
       const encodedPng = (png as any).toBuffer();
+      if (res.headersSent) {
+        return;
+      }
       res.status(200).send(encodedPng);
     case 'image/vegaSvg':
     default:
       const svg = await view.toSVG();
+      if (res.headersSent) {
+        return;
+      }
       res.status(200).send(svg);
       break;
   }
