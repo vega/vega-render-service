@@ -26,8 +26,8 @@ describe('API Request', () => {
     expect(response.text).toMatchSnapshot();
   });
 
-  test('should return 404 for external link', async () => {
+  test('should return error status for external link', async () => {
     const response = await request(app).post('/').send(specUseExternalLink);
-    expect(response.statusCode).toBe(404);
+    expect(response.statusCode).toBe(400);
   })
 });

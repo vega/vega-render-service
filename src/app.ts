@@ -8,6 +8,7 @@ import cors from 'cors';
 import { registerFont } from 'canvas';
 import { ALLOWED_URLS } from './constants';
 import fs from 'fs';
+import {URL} from "url";
 
 if (fs.existsSync(__dirname + '/public/fonts/Roboto/Roboto.ttf')) {
   registerFont(__dirname + '/public/fonts/Roboto/Roboto.ttf', {
@@ -56,18 +57,19 @@ app.post('/', async (req: Request, res: Response) => {
       break;
     default:
       return res
-        .status(404)
+        .status(400)
         .end('Invalid Schema, should be Vega or Vega-Lite.');
   }
 
   let loader = vega.loader({ mode: 'http'});
   loader.http = (uri:string, options:any): Promise<string> => {
-    if (ALLOWED_URLS.every((allowedUrl) => !uri.includes(allowedUrl))) {
-      res.status(404).send("External URI not allowed on this API");
-      throw 'External data url not allowed';
+    let parsedUri = new URL(uri);
+    if (ALLOWED_URLS.every((allowedUrl) => !parsedUri.hostname.includes(allowedUrl))) {
+      res.status(400).send("External URI not allowed on this API");
+      throw new Error('External data url not allowed');
     }
     return fetch(uri, {}).then((response) => {
-      if (!response.ok) throw response.status + '' + response.statusText;
+      if (!response.ok) throw new Error(response.status + '' + response.statusText);
       return response.text();
     })
   };
