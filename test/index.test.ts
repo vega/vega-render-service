@@ -4,6 +4,7 @@ import request from 'supertest';
 import app from '../src/app';
 export const vegaSpec = require('../vegaSpecs/bar.vg.json');
 export const vegaliteSpec = require('../vegaSpecs/bar.vl.json');
+export const specUseExternalLink = require('../vegaSpecs/specUseExternalLink.vg.json');
 
 describe('API Request', () => {
   test('It should response the GET method', async () => {
@@ -24,4 +25,9 @@ describe('API Request', () => {
     expect(response.statusCode).toBe(200);
     expect(response.text).toMatchSnapshot();
   });
+
+  test('should return error status for external link', async () => {
+    const response = await request(app).post('/').send(specUseExternalLink);
+    expect(response.statusCode).toBe(400);
+  })
 });
