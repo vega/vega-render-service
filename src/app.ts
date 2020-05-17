@@ -1,5 +1,5 @@
 import bodyparser from 'body-parser';
-import express, {Request, Response} from 'express';
+import express, { Request, Response } from 'express';
 import { Express } from 'express-serve-static-core';
 import * as vega from 'vega';
 import vegaUrlParser from 'vega-schema-url-parser';
@@ -8,7 +8,7 @@ import cors from 'cors';
 import { registerFont } from 'canvas';
 import { ALLOWED_URLS } from './constants';
 import fs from 'fs';
-import {URL} from "url";
+import { URL } from 'url';
 
 if (fs.existsSync(__dirname + '/public/fonts/Roboto/Roboto.ttf')) {
   registerFont(__dirname + '/public/fonts/Roboto/Roboto.ttf', {
@@ -61,22 +61,26 @@ app.post('/', async (req: Request, res: Response) => {
         .end('Invalid Schema, should be Vega or Vega-Lite.');
   }
 
-  let loader = vega.loader({ mode: 'http'});
-  loader.http = (uri:string, options:any): Promise<string> => {
-    let parsedUri = new URL(uri);
-    if (ALLOWED_URLS.every((allowedUrl) => !parsedUri.hostname.includes(allowedUrl))) {
-      res.status(400).send("External URI not allowed on this API");
+  const loader = vega.loader({ mode: 'http' });
+  loader.http = (uri: string, options: any): Promise<string> => {
+    const parsedUri = new URL(uri);
+    if (
+      ALLOWED_URLS.every(
+        (allowedUrl) => !parsedUri.hostname.includes(allowedUrl),
+      )
+    ) {
+      res.status(400).send('External URI not allowed on this API');
       throw new Error('External data url not allowed');
     }
     return fetch(uri, {}).then((response) => {
       if (!response.ok) throw new Error(response.status + response.statusText);
       return response.text();
-    })
+    });
   };
 
-  let view = new vega.View(vega.parse(specs), {
+  const view = new vega.View(vega.parse(specs), {
     renderer: 'none',
-    loader: loader
+    loader: loader,
   });
   view.finalize();
   switch (contentType) {
