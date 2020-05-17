@@ -46,14 +46,14 @@ app.get('/', (req: Request, res: Response) => {
 
 app.post('/', async (req: Request, res: Response) => {
   const contentType = req.header('Accept') ?? 'pdf';
-  let specs: vega.Spec = req.body;
-  const { library } = vegaUrlParser(specs.$schema);
+  let spec = req.body;
+  const { library } = vegaUrlParser(spec.$schema);
 
   switch (library) {
     case 'vega':
       break;
     case 'vega-lite':
-      specs = compile(specs as TopLevelSpec, {}).spec;
+      spec = compile(spec).spec;
       break;
     default:
       return res
@@ -78,7 +78,7 @@ app.post('/', async (req: Request, res: Response) => {
     });
   };
 
-  const view = new vega.View(vega.parse(specs), {
+  const view = new vega.View(vega.parse(spec), {
     renderer: 'none',
     loader: loader,
   });
