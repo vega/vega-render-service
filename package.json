@@ -9,6 +9,8 @@
     "now-build": "yum install gcc-c++ cairo-devel pango-devel libjpeg-turbo-devel giflib-devel && npm run build",
     "start": "node build/server.js",
     "test": "jest test/",
+    "lint": "eslint .",
+    "format": "eslint . --fix",
     "deploy": "now"
   },
   "private": true,

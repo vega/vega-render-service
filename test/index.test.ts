@@ -29,5 +29,5 @@ describe('API Request', () => {
   test('should return error status for external link', async () => {
     const response = await request(app).post('/').send(specUseExternalLink);
     expect(response.statusCode).toBe(400);
-  })
+  });
 });
