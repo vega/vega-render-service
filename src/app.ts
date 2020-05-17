@@ -1,14 +1,14 @@
 import bodyparser from 'body-parser';
+import { registerFont } from 'canvas';
+import cors from 'cors';
 import express, { Request, Response } from 'express';
 import { Express } from 'express-serve-static-core';
-import * as vega from 'vega';
-import vegaUrlParser from 'vega-schema-url-parser';
-import { compile, TopLevelSpec } from 'vega-lite';
-import cors from 'cors';
-import { registerFont } from 'canvas';
-import { ALLOWED_URLS } from './constants';
 import fs from 'fs';
 import { URL } from 'url';
+import * as vega from 'vega';
+import { compile } from 'vega-lite';
+import vegaUrlParser from 'vega-schema-url-parser';
+import { ALLOWED_URLS } from './constants';
 
 if (fs.existsSync(__dirname + '/public/fonts/Roboto/Roboto.ttf')) {
   registerFont(__dirname + '/public/fonts/Roboto/Roboto.ttf', {
