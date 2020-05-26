@@ -1,44 +1,18 @@
 {
   "$schema": "https://vega.github.io/schema/vega/v5.json",
-  "description": "A scatter plot with trend line calculated via locally-weighted (loess) regression.",
+  "description": "A basic scatter plot example depicting automobile statistics.",
+  "width": 200,
+  "height": 200,
   "padding": 5,
-  "width": 500,
-  "height": 500,
-  "autosize": "pad",
-
-  "signals": [
-    {
-      "name": "loessBandwidth", "value": 0.3,
-      "bind": {"input": "range", "min": 0.05, "max": 1}
-    },
-    {
-      "name": "groupby", "value": "none",
-      "bind": {"input": "select", "options": ["none", "genre"]}
-    }
-  ],
 
   "data": [
     {
-      "name": "movies",
-      "url": "data/movies.json",
+      "name": "source",
+      "url": "data/cars.json",
       "transform": [
         {
           "type": "filter",
-          "expr": "datum.Rotten_Tomatoes_Rating != null && datum.IMDB_Rating != null"
-        }
-      ]
-    },
-    {
-      "name": "trend",
-      "source": "movies",
-      "transform": [
-        {
-          "type": "loess",
-          "groupby": [{"signal": "groupby === 'genre' ? 'Major_Genre' : 'foo'"}],
-          "bandwidth": {"signal": "loessBandwidth"},
-          "x": "Rotten_Tomatoes_Rating",
-          "y": "IMDB_Rating",
-          "as": ["u", "v"]
+          "expr": "datum['Horsepower'] != null && datum['Miles_per_Gallon'] != null && datum['Acceleration'] != null"
         }
       ]
     }
@@ -48,52 +22,80 @@
     {
       "name": "x",
       "type": "linear",
-      "domain": {"data": "movies", "field": "Rotten_Tomatoes_Rating"},
+      "round": true,
+      "nice": true,
+      "zero": true,
+      "domain": {"data": "source", "field": "Horsepower"},
       "range": "width"
     },
     {
       "name": "y",
       "type": "linear",
-      "domain": {"data": "movies", "field": "IMDB_Rating"},
+      "round": true,
+      "nice": true,
+      "zero": true,
+      "domain": {"data": "source", "field": "Miles_per_Gallon"},
       "range": "height"
+    },
+    {
+      "name": "size",
+      "type": "linear",
+      "round": true,
+      "nice": false,
+      "zero": true,
+      "domain": {"data": "source", "field": "Acceleration"},
+      "range": [4,361]
+    }
+  ],
+
+  "axes": [
+    {
+      "scale": "x",
+      "grid": true,
+      "domain": false,
+      "orient": "bottom",
+      "tickCount": 5,
+      "title": "Horsepower"
+    },
+    {
+      "scale": "y",
+      "grid": true,
+      "domain": false,
+      "orient": "left",
+      "titlePadding": 5,
+      "title": "Miles_per_Gallon"
+    }
+  ],
+
+  "legends": [
+    {
+      "size": "size",
+      "title": "Acceleration",
+      "format": "s",
+      "symbolStrokeColor": "#4682b4",
+      "symbolStrokeWidth": 2,
+      "symbolOpacity": 0.5,
+      "symbolType": "circle"
     }
   ],
 
   "marks": [
     {
+      "name": "marks",
       "type": "symbol",
-      "from": {"data": "movies"},
+      "from": {"data": "source"},
       "encode": {
-        "enter": {
-          "x": {"scale": "x", "field": "Rotten_Tomatoes_Rating"},
-          "y": {"scale": "y", "field": "IMDB_Rating"},
-          "fillOpacity": {"value": 0.5},
-          "size": {"value": 16}
+        "update": {
+          "x": {"scale": "x", "field": "Horsepower"},
+          "y": {"scale": "y", "field": "Miles_per_Gallon"},
+          "size": {"scale": "size", "field": "Acceleration"},
+          "shape": {"value": "circle"},
+          "strokeWidth": {"value": 2},
+          "opacity": {"value": 0.5},
+          "stroke": {"value": "#4682b4"},
+          "fill": {"value": "transparent"}
         }
       }
-    },
-    {
-      "type": "group",
-      "from": {
-        "facet": {
-          "data": "trend",
-          "name": "curve",
-          "groupby": "Major_Genre"
-        }
-      },
-      "marks": [
-        {
-          "type": "line",
-          "from": {"data": "curve"},
-          "encode": {
-            "enter": {
-              "x": {"scale": "x", "field": "u"},
-              "y": {"scale": "y", "field": "v"},
-              "stroke": {"value": "firebrick"}
-            }
-          }
-        }
-      ]
     }
   ]
 }
