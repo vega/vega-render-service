@@ -35,5 +35,5 @@ jobs:
       - run: yarn lint
       - run: yarn build
       # - run: yarn test
-      - run: docker build -t vega-render-test .
+      - run: docker build -f Dockerfile.test -t vega-render-test .
       - run: docker run --rm vega-render-test
