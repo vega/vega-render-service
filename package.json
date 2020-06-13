@@ -4,7 +4,7 @@
   "description": "Service to render Vega charts",
   "main": "dist/index.js",
   "scripts": {
-    "build": "tsc  && jest --updateSnapshot",
+    "build": "tsc",
     "prestart": "npm run build",
     "now-build": "yum install gcc-c++ cairo-devel pango-devel libjpeg-turbo-devel giflib-devel && npm run build",
     "start": "node build/server.js",
