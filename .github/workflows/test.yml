@@ -26,7 +26,14 @@ jobs:
 
       - name: Install Node dependencies
         run: yarn --frozen-lockfile
-        
+
+      - name: Install default fonts
+        run: |
+          echo msttcorefonts msttcorefonts/accepted-mscorefonts-eula select true | sudo debconf-set-selections
+          sudo apt-get install msttcorefonts
+
       - run: yarn lint
       - run: yarn build
-      - run: yarn test
+      # - run: yarn test
+      - run: docker build -f Dockerfile.test -t vega-render-test .
+      - run: docker run --rm vega-render-test
