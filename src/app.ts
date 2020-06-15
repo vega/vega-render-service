@@ -8,7 +8,7 @@ import { URL } from 'url';
 import * as vega from 'vega';
 import { compile } from 'vega-lite';
 import vegaUrlParser from 'vega-schema-url-parser';
-import { ALLOWED_URLS } from './constants';
+import { ALLOWED_URLS, VEGA_DATA_BASE_URL } from './constants';
 
 if (fs.existsSync(__dirname + '/public/fonts/Roboto/Roboto.ttf')) {
   registerFont(__dirname + '/public/fonts/Roboto/Roboto.ttf', {
@@ -47,12 +47,10 @@ app.get('/', (req: Request, res: Response) => {
 app.post('/', async (req: Request, res: Response) => {
   const contentType = req.header('Accept') ?? 'pdf';
   if (!req.body.spec) {
-    return res
-        .status(400)
-        .end('Must provide Vega spec for render service');
+    return res.status(400).end('Must provide Vega spec for render service');
   }
   let { spec } = req.body;
-  let baseURL = req.body.baseURL || 'https://vega.github.io/vega-datasets/';
+  const baseURL = req.body.baseURL || VEGA_DATA_BASE_URL;
   const { library } = vegaUrlParser(spec.$schema);
 
   switch (library) {
@@ -89,7 +87,7 @@ app.post('/', async (req: Request, res: Response) => {
       if (options) {
         return await originalLoad(url, {
           ...options,
-          ...{ baseURL }
+          ...{ baseURL },
         });
       }
       return await originalLoad(url, { baseURL });
@@ -100,7 +98,7 @@ app.post('/', async (req: Request, res: Response) => {
 
   const view = new vega.View(vega.parse(spec), {
     renderer: 'none',
-    loader: loader
+    loader: loader,
   });
   view.finalize();
   switch (contentType) {
