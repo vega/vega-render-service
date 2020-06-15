@@ -7,7 +7,7 @@ export const vegaliteSpec = require('../vegaSpecs/bar.vl.json');
 export const specUseExternalLink = require('../vegaSpecs/specUseInvalidExternalLink.vg.json');
 export const vegaSpecWithRelativeUrl = require('../vegaSpecs/specWithRelativeUrl.vg.json');
 export const vegaliteSpecWithRelativeUrl = require('../vegaSpecs/specWithRelativeUrl.vl.json');
-export const VEGA_GITHUB_RAW_DATA_BASE_URL = 'https://raw.githubusercontent.com/vega/vega/master/docs/';
+export const VEGA_GITHUB_RAW_DATA_BASE_URL = 'https://vega.github.io/vega-datasets/';
 
 describe('API Request', () => {
   test('It should response the GET method', async () => {

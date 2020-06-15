@@ -49,10 +49,10 @@ app.post('/', async (req: Request, res: Response) => {
   if (!req.body.spec) {
     return res
         .status(400)
-        .end('Must provide Vega spec for render servicce');
+        .end('Must provide Vega spec for render service');
   }
   let { spec } = req.body;
-  let baseURL = req.body.baseURL || '';
+  let baseURL = req.body.baseURL || 'https://vega.github.io/vega-datasets/';
   const { library } = vegaUrlParser(spec.$schema);
 
   switch (library) {
