@@ -8,7 +8,7 @@ import { URL } from 'url';
 import * as vega from 'vega';
 import { compile } from 'vega-lite';
 import vegaUrlParser from 'vega-schema-url-parser';
-import { ALLOWED_URLS } from './constants';
+import { ALLOWED_URLS, VEGA_DATA_BASE_URL } from './constants';
 
 if (fs.existsSync(__dirname + '/public/fonts/Roboto/Roboto.ttf')) {
   registerFont(__dirname + '/public/fonts/Roboto/Roboto.ttf', {
@@ -46,7 +46,11 @@ app.get('/', (req: Request, res: Response) => {
 
 app.post('/', async (req: Request, res: Response) => {
   const contentType = req.header('Accept') ?? 'pdf';
-  let spec = req.body;
+  if (!req.body.spec) {
+    return res.status(400).end('Must provide Vega spec for render service');
+  }
+  let { spec } = req.body;
+  const baseURL = req.body.baseURL ?? VEGA_DATA_BASE_URL;
   const { library } = vegaUrlParser(spec.$schema);
 
   switch (library) {
@@ -62,7 +66,10 @@ app.post('/', async (req: Request, res: Response) => {
   }
 
   const loader = vega.loader({ mode: 'http' });
-  loader.http = (uri: string, options: any): Promise<string> => {
+  const originalLoad = loader.load.bind(loader);
+  const originalHttp = loader.http.bind(loader);
+
+  loader.http = async (uri: string, options: any): Promise<string> => {
     const parsedUri = new URL(uri);
     if (
       ALLOWED_URLS.every(
@@ -72,10 +79,21 @@ app.post('/', async (req: Request, res: Response) => {
       res.status(400).send('External URI not allowed on this API');
       throw new Error('External data url not allowed');
     }
-    return fetch(uri, {}).then((response) => {
-      if (!response.ok) throw new Error(response.status + response.statusText);
-      return response.text();
-    });
+    return originalHttp(uri, options);
+  };
+
+  loader.load = async (url, options) => {
+    try {
+      if (options) {
+        return await originalLoad(url, {
+          ...options,
+          ...{ baseURL },
+        });
+      }
+      return await originalLoad(url, { baseURL });
+    } catch {
+      return await originalLoad(url, options);
+    }
   };
 
   const view = new vega.View(vega.parse(spec), {
