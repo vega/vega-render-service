@@ -22,7 +22,7 @@
     "express": "^4.17.1",
     "vega": "^5.12.0",
     "vega-lite": "^4.12.1",
-    "vega-schema-url-parser": "^1.1.0"
+    "vega-schema-url-parser": "^2.1.0"
   },
   "devDependencies": {
     "@types/body-parser": "^1.19.0",
