@@ -3,7 +3,7 @@
 import request from 'supertest';
 import app from '../src/app';
 import { VEGA_DATA_BASE_URL } from '../src/constants';
-import { toMatchImageSnapshot } from 'jest-image-snapshot';
+import { configureToMatchImageSnapshot, MatchImageSnapshotOptions } from 'jest-image-snapshot';
 
 export const vegaSpec = require('../vegaSpecs/bar.vg.json');
 export const vegaliteSpec = require('../vegaSpecs/bar.vl.json');
@@ -11,6 +11,14 @@ export const specUseExternalLink = require('../vegaSpecs/specUseInvalidExternalL
 export const vegaSpecWithRelativeUrl = require('../vegaSpecs/specWithRelativeUrl.vg.json');
 export const vegaliteSpecWithRelativeUrl = require('../vegaSpecs/specWithRelativeUrl.vl.json');
 
+
+const customImageSnapshotConfig: MatchImageSnapshotOptions = {
+  comparisonMethod: 'ssim',
+  failureThreshold: 0.1,
+  failureThresholdType: 'percent'
+}
+
+const toMatchImageSnapshot = configureToMatchImageSnapshot(customImageSnapshotConfig);
 expect.extend({ toMatchImageSnapshot });
 
 describe('API Request', () => {
