@@ -1,6 +1,5 @@
 .now
 *.pdf
-*.png
 build/*
 dist/*
 node_modules/*
