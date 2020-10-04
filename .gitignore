@@ -1,4 +1,4 @@
-.now
+.vercel
 *.pdf
 *.png
 build/*

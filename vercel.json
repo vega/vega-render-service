@@ -1,8 +1,6 @@
 {
   "version": 2,
-  "name": "vega-render-service",
-  "alias": ["render-vega", "vega-render"],
-  "builds": [{ "src": "src/*.ts", "use": "@now/node" }],
+  "builds": [{ "src": "src/*.ts", "use": "@vercel/node" }],
   "routes": [{
     "src": "/(.*)", "dest": "/src/server.ts",
     "methods": ["GET", "POST", "OPTIONS"],
