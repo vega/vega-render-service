@@ -21,7 +21,7 @@
     "canvas": "^2.6.1",
     "express": "^4.17.1",
     "vega": "^5.17.0",
-    "vega-lite": "^4.16.8",
+    "vega-lite": "^4.17.0",
     "vega-schema-url-parser": "^2.1.0"
   },
   "devDependencies": {
