@@ -2,7 +2,7 @@
 
 [![Build Status](https://github.com/vega/vega-render-service/workflows/Test/badge.svg)](https://github.com/vega/vega-render-service/actions)
 
-Deployed at https://render-vega.vercel.app/. The service is still in development and some things may change.
+Deployed at https://render-vega.vercel.app/. We will update the service with new version of Vega and Vega-Lite and change the API.
 
 ## Dev Setup
 
