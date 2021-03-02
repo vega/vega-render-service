@@ -23,5 +23,5 @@ RUN npm install
 COPY . .
 
 EXPOSE 8090
-CMD [ "npm", "run", "build" ]
-CMD [ "npm", "test" ]
+CMD [ "yarn", "build" ]
+CMD [ "yarn", "test" ]

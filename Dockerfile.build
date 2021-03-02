@@ -23,6 +23,6 @@ RUN npm install
 COPY . .
 
 EXPOSE 8090
-CMD [ "npm", "run", "build" ]
-CMD [ "jest", "--updateSnapshot" ]
+CMD [ "yarn", "build" ]
+CMD [ "yarn", "jest", "--updateSnapshot" ]
 
