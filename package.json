@@ -18,7 +18,7 @@
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.19.0",
-    "canvas": "^2.6.1",
+    "canvas": "^2.7.0",
     "express": "^4.17.1",
     "vega": "^5.17.3",
     "vega-lite": "^4.17.0",
