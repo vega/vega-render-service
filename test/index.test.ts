@@ -6,7 +6,7 @@ import { VEGA_DATA_BASE_URL } from '../src/constants';
 
 export const vegaSpec = require('../vegaSpecs/bar.vg.json');
 export const vegaliteSpec = require('../vegaSpecs/bar.vl.json');
-export const specUseExternalLink = require('../vegaSpecs/specUseInvalidExternalLink.vg.json');
+export const specUseExternalLink = require('../vegaSpecs/specUseInvalidExternalLink.vl.json');
 export const vegaSpecWithRelativeUrl = require('../vegaSpecs/specWithRelativeUrl.vg.json');
 export const vegaliteSpecWithRelativeUrl = require('../vegaSpecs/specWithRelativeUrl.vl.json');
 
@@ -23,7 +23,7 @@ describe('API Request', () => {
     expect(response.text).toMatchSnapshot();
   });
 
-  test('should POST SVG for VegaLite Specs', async () => {
+  test('should POST SVG for Vega-Lite Specs', async () => {
     const response = await request(app).post('/').send({ spec: vegaliteSpec });
 
     expect(response.statusCode).toBe(200);
@@ -51,7 +51,7 @@ describe('API Request', () => {
     expect(response.text).toMatchSnapshot();
   });
 
-  test('should render Vegalite external verified base URL correctly', async () => {
+  test('should render Vega-Lite external verified base URL correctly', async () => {
     const response = await request(app).post('/').send({
       spec: vegaliteSpecWithRelativeUrl,
       baseURL: VEGA_DATA_BASE_URL,
@@ -60,7 +60,7 @@ describe('API Request', () => {
     expect(response.text).toMatchSnapshot();
   });
 
-  test('should render Vegalite external invalid base URL correctly', async () => {
+  test('should render Vega-Lite external invalid base URL correctly', async () => {
     const response = await request(app).post('/').send({
       spec: vegaliteSpecWithRelativeUrl,
       baseURL: 'http://google.com',
