@@ -25,7 +25,7 @@
     "vega-schema-url-parser": "^2.2.0"
   },
   "devDependencies": {
-    "@types/body-parser": "^1.19.0",
+    "@types/body-parser": "^1.19.1",
     "@types/express": "^4.17.12",
     "@types/jest": "^26.0.23",
     "@types/node": "^15.6.2",
