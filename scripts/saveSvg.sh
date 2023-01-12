@@ -3,5 +3,5 @@
 curl -X POST \
   -H 'Accept: image/vegaSvg' \
   -H 'Content-Type: application/json' \
-  -d @./vegaSpecs/bar.vl.json http://localhost:8080/ \
+  -d @./vegaSpecs/bar.vl.json http://localhost:8090/ \
   >> plot.svg
