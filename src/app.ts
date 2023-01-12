@@ -10,10 +10,6 @@ import { compile } from 'vega-lite';
 import vegaUrlParser from 'vega-schema-url-parser';
 import { ALLOWED_URLS, VEGA_DATA_BASE_URL } from './constants';
 
-declare global {
-	type HTMLCanvasElement = never;
-}
-
 if (fs.existsSync(`${__dirname}/public/fonts/Roboto/Roboto.ttf`)) {
   registerFont(`${__dirname}/public/fonts/Roboto/Roboto.ttf`, {
     family: 'Roboto',
