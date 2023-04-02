@@ -36,7 +36,7 @@
     "eslint-config-prettier": "^8.8.0",
     "eslint-plugin-prettier": "^4.2.1",
     "jest": "27.5.1",
-    "vercel": "^28.16.11",
+    "vercel": "^28.18.3",
     "prettier": "^2.8.3",
     "supertest": "^6.3.3",
     "ts-jest": "^27.1.4",
