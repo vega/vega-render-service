@@ -46,11 +46,12 @@ app.get('/', (req: Request, res: Response) => {
 
 app.post('/', async (req: Request, res: Response) => {
   const contentType = req.header('Accept') ?? 'pdf';
-  if (!req.body.spec) {
+  const {body} = req;
+  if (!body && !body.spec) {
     return res.status(400).end('Must provide Vega spec for render service');
   }
-  let { spec } = req.body;
-  const baseURL = req.body.baseURL ?? VEGA_DATA_BASE_URL;
+  let spec = body.spec ?? body;
+  const baseURL = body.baseURL ?? VEGA_DATA_BASE_URL;
   const { library } = vegaUrlParser(spec.$schema);
 
   switch (library) {
