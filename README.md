@@ -2,7 +2,7 @@
 
 [![Build Status](https://github.com/vega/vega-render-service/workflows/Test/badge.svg)](https://github.com/vega/vega-render-service/actions)
 
-**Deprecated. Please use https://github.com/jonmmease/vl-convert-service.**
+**Deprecated. Please use https://github.com/vega/vl-convert-service.**
 
 Deployed at https://render-vega.vercel.app/. We will update the service with new version of Vega and Vega-Lite and change the API.
 
